@@ -1,0 +1,58 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-family: Helvetica;
+}
+
+#tree {
+    width: 100%;
+    height: 100%;
+}
+
+/* Male nodes */
+svg.linh .node.male > rect {
+    fill: #039be5;
+}
+
+/* Female nodes */
+svg.linh .node.female > rect {
+    fill: #ff46a3;
+}
+
+/* Specific node by ID */
+/* svg.linh [data-n-id='1'].node.male > rect {
+    fill: gray;
+} */
+
+/* Nodes with a 'green' tag */
+svg.linh .node.green.female > rect {
+    fill: #00d3a5; /* Custom color for female nodes with a 'green' tag */
+}
+
+/* Custom field styles */
+.field_0 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    fill: #fff; /* Custom color for the first field */
+}
+
+.field_1 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    fill: #fff; /* Custom color for the first field */
+}
+
+g[data-ctrl-n-c-menu-id] > circle {
+    stroke-width: 2;
+}
+
+g[data-ctrl-n-c-menu-name] > circle {
+    stroke-width: 0;
+}
