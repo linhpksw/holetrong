@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
-const url = 'mongodb+srv://linhpksw:Bmcmc20@holetrong.fvkbw4i.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB connection string
-const dbName = 'familyDB'; // Replace with your database name
+const url = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 const client = new MongoClient(url);
 
