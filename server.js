@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { connect } = require('./databases/db'); // Make sure this path is correct
 
 const app = express();
-const port = 9999;
+const port = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files from the public directory
