@@ -1,7 +1,7 @@
 // server.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const { connect } = require('./databases/db'); // Make sure this path is correct
+const connectToMongoDB = require('./databases/db');
 
 const app = express();
 const port = 3000;
@@ -9,21 +9,60 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files from the public directory
 
-app.get('/nodes', async (req, res) => {
-    const { familiesCollection } = await connect();
-    const nodes = await familiesCollection.find({}).toArray();
-    res.send(nodes);
-});
+let familiesCollection;
 
-app.put('/nodes/:id', async (req, res) => {
-    const { collection } = await connect();
-    const { id } = req.params;
-    const node = req.body;
-    await collection.updateOne({ id: parseInt(id) }, { $set: node });
-    res.send({ status: 'Updated', node });
-});
+// Start the server only after the database connection is established
+connectToMongoDB()
+    .then((collection) => {
+        familiesCollection = collection;
 
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
+        app.get('/nodes', async (req, res) => {
+            const nodes = await familiesCollection.find({}).toArray();
+            res.send(nodes);
+        });
 
-app.listen(port, () => console.log(`Server running on port http://localhost:${port}`));
+        app.post('/nodes/add', async (req, res) => {
+            const node = req.body;
+
+            try {
+                // Find the current highest orderId
+                const highestOrderNode = await familiesCollection.find().sort({ orderId: -1 }).limit(1).toArray();
+                const highestOrderId = highestOrderNode.length > 0 ? parseInt(highestOrderNode[0].orderId) : 0;
+
+                // Set the orderId for the new node
+                node.orderId = highestOrderId + 1;
+
+                // Insert the new node with the incremented orderId
+                const result = await familiesCollection.insertOne(node);
+                res.send({ status: 'Added', result });
+            } catch (error) {
+                console.error('Error adding nodes:', error);
+                res.status(500).send({ status: 'Error', message: error.message });
+            }
+        });
+
+        app.put('/nodes/update/:id', async (req, res) => {
+            const { id } = req.params;
+            const node = req.body;
+
+            // Remove the _id field from the update object
+            delete node._id;
+            delete node.orderId;
+
+            try {
+                await familiesCollection.updateOne({ id: id }, { $set: node });
+                res.send({ status: 'Updated', node });
+            } catch (error) {
+                console.error('Error updating node:', error);
+                res.status(500).send({ status: 'Error', message: error.message });
+            }
+        });
+
+        // Serve static files from the 'public' directory
+        app.use(express.static('public'));
+
+        app.listen(port, () => console.log(`Server running on port http://localhost:${port}`));
+    })
+    .catch((error) => {
+        console.error('Failed to start the server:', error);
+    });

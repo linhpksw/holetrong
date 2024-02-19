@@ -29,25 +29,49 @@ export function attachEventHandlers(family) {
         }
     });
 
-    // family.onUpdateNode((args) => {
-    //     console.log('onUpdateNode', args);
+    family.onUpdateNode(async (args) => {
+        console.log('onUpdateNode', args);
 
-    //     // Post the data from args to your server using fetch
-    //     fetch(`http://localhost:9999/nodes/${args.node.id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(args.node),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('There was an error!', error);
-    //         });
-    // });
+        // Handle additions
+        if (args.addNodesData && args.addNodesData.length > 0) {
+            try {
+                const addPromises = args.addNodesData.map((node) =>
+                    fetch('/nodes/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(node),
+                    }).then((response) => response.json())
+                );
+
+                const addResults = await Promise.all(addPromises);
+                console.log('Add results:', addResults);
+            } catch (error) {
+                console.error('Error adding nodes:', error);
+            }
+        }
+
+        // Handle updates
+        if (args.updateNodesData && args.updateNodesData.length > 0) {
+            try {
+                const updatePromises = args.updateNodesData.map((node) =>
+                    fetch(`/nodes/update/${node.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(node),
+                    }).then((response) => response.json())
+                );
+
+                const updateResults = await Promise.all(updatePromises);
+                console.log('Update results:', updateResults);
+            } catch (error) {
+                console.error('Error updating nodes:', error);
+            }
+        }
+    });
 
     // family.editUI.on('element-btn-click', function (sender, args) {
     //     FamilyTree.fileUploadDialog(function (file) {

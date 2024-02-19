@@ -9,12 +9,17 @@ const dbName = process.env.DB_NAME;
 
 const client = new MongoClient(url);
 
-async function connect() {
-    await client.connect();
-    console.log('Connected to MongoDB');
-    const db = client.db(dbName);
-    const familiesCollection = db.collection('families');
-    return { db, familiesCollection };
-}
+const connect = async () => {
+    try {
+        await client.connect();
+        console.log('Connected to MongoDB');
+        const db = client.db(dbName);
+        const familiesCollection = db.collection('families');
+        return familiesCollection;
+    } catch (error) {
+        console.error('Failed to connect to MongoDB', error);
+        process.exit(1);
+    }
+};
 
-module.exports = { connect };
+module.exports = connect;

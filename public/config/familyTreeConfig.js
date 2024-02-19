@@ -23,7 +23,7 @@ export function initializeFamilyTree(containerId) {
         },
         nodeCircleMenu: nodeCircleMenu,
         // undoRedoStorageName: 'myStorageName',
-        orderBy: 'id',
+        orderBy: 'orderId',
     });
 
     circleMenuBtn(FamilyTree);

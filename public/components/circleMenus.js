@@ -31,7 +31,7 @@ export const nodeCircleMenu = {
     },
     removeNode: {
         icon: removeIcon,
-        text: 'Delete node',
+        text: 'Remove node',
         color: MENU_ITEM_COLOR,
     },
     callNode: {
@@ -77,7 +77,7 @@ export function circleMenuEvent(family) {
                 family.editUI.show(args.nodeId);
                 break;
             case 'removeNode':
-                family.removeNode(parseInt(args.nodeId));
+                family.removeNode(args.nodeId);
                 break;
             case 'callNode':
                 alert('Calling ' + args.nodeId);
