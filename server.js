@@ -58,6 +58,18 @@ connectToMongoDB()
             }
         });
 
+        app.delete('/nodes/delete/:id', async (req, res) => {
+            const { id } = req.params;
+
+            try {
+                await deleteNodeAndDescendants(familiesCollection, id);
+                res.send({ status: 'Deleted', id });
+            } catch (error) {
+                console.error('Error deleting node:', error);
+                res.status(500).send({ status: 'Error', message: error.message });
+            }
+        });
+
         // Serve static files from the 'public' directory
         app.use(express.static('public'));
 
@@ -66,3 +78,30 @@ connectToMongoDB()
     .catch((error) => {
         console.error('Failed to start the server:', error);
     });
+
+async function deleteNodeAndDescendants(familiesCollection, nodeId) {
+    // First, find the node itself to get any spouses
+    const node = await familiesCollection.findOne({ id: nodeId });
+
+    // Delete the spouses (if any)
+    if (node && node.pids) {
+        for (const partnerId of node.pids) {
+            await familiesCollection.deleteOne({ id: partnerId });
+        }
+    }
+
+    // Then, find all children of the node to be deleted
+    const children = await familiesCollection
+        .find({
+            $or: [{ mid: nodeId }, { fid: nodeId }],
+        })
+        .toArray();
+
+    // Recursively delete each child
+    for (const child of children) {
+        await deleteNodeAndDescendants(familiesCollection, child.id);
+    }
+
+    // After all children and spouses are deleted, delete the node itself
+    await familiesCollection.deleteOne({ id: nodeId });
+}

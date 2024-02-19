@@ -22,11 +22,6 @@ export function attachEventHandlers(family) {
                 args.p.yb +
                 '"/>';
         }
-
-        if (args.name == 'born') {
-            var date = new Date(args.value);
-            args.value = date.toLocaleDateString('vi-VN');
-        }
     });
 
     family.onUpdateNode(async (args) => {
@@ -73,16 +68,23 @@ export function attachEventHandlers(family) {
         }
     });
 
-    // family.editUI.on('element-btn-click', function (sender, args) {
-    //     FamilyTree.fileUploadDialog(function (file) {
-    //         let formData = new FormData();
-    //         formData.append('file', file);
-    //         alert('upload the file');
-    //         console.log(args);
-    //     });
-    // });
+    family.editUI.on('element-btn-click', function (sender, args) {
+        FamilyTree.fileUploadDialog(function (file) {
+            let formData = new FormData();
+            formData.append('file', file);
+            alert('upload the file');
+            console.log(args);
+        });
+    });
 
-    // console.log('family: ', family);
+    family.editUI.on('button-click', function (sender, args) {
+        if (args.name == 'map') {
+            var data = family.get(args.nodeId);
+            window.open(data.map);
+        }
+    });
+
+    console.log('family: ', family);
 
     // Add other event handlers as needed...
 }

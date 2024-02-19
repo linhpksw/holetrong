@@ -77,7 +77,17 @@ export function circleMenuEvent(family) {
                 family.editUI.show(args.nodeId);
                 break;
             case 'removeNode':
-                family.removeNode(args.nodeId);
+                fetch(`/nodes/delete/${args.nodeId}`, {
+                    method: 'DELETE',
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Node removed:', data);
+                        family.removeNode(args.nodeId);
+                    })
+                    .catch((error) => {
+                        console.error('Error removing node:', error);
+                    });
                 break;
             case 'callNode':
                 alert('Calling ' + args.nodeId);

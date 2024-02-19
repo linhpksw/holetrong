@@ -56,3 +56,93 @@ g[data-ctrl-n-c-menu-id] > circle {
 g[data-ctrl-n-c-menu-name] > circle {
     stroke-width: 0;
 }
+
+/* Overall edit form styling */
+.bft-edit-form {
+    position: relative;
+}
+
+.bft-edit-form .bft-edit-form-avatar {
+    top: 175px;
+    border: none;
+    background-color: transparent;
+    width: 120px;
+    height: 120px;
+}
+
+#bft-avatar img {
+    border: 8px solid #fff;
+    transition-duration: 0.4s;
+    transition-property: transform;
+}
+
+#bft-avatar img:hover {
+    transform: scale(1.1);
+}
+
+/* Header section */
+.bft-edit-form .bft-edit-form-header {
+    background: url('../imgs/pic1.jpg') center/cover no-repeat;
+    height: 250px;
+    border-radius: 30px 30px 0px 0px;
+}
+
+.bft-edit-form .bft-edit-form-title {
+    position: absolute;
+    top: 305px;
+    left: 50%; /* Set the left edge of the title to the center of the parent */
+    transform: translateX(-50%); /* Shift the title to the left by half its own width */
+    width: max-content; /* This ensures that the width of the title is only as wide as its content */
+    text-align: center; /* Ensure the text within the title is centered */
+    color: red;
+    z-index: 1000;
+}
+
+.bft-edit-form-instruments {
+    min-height: none;
+    margin-top: 120px;
+}
+
+/* Close button */
+.bft-edit-form .bft-edit-form-close {
+    /* Add your styles here */
+    fill: red; /* Example icon color */
+}
+
+/* Avatar */
+.bft-edit-form .bft-edit-form-avatar {
+    /* Add your styles here */
+    border-radius: 50%; /* Example avatar shape */
+}
+
+/* Buttons in the form */
+.bft-edit-form .bft-img-button {
+    /* Add your styles here */
+    background-color: #28a745; /* Example button color */
+    border-radius: 4px; /* Example border radius */
+}
+
+/* Input fields */
+.bft-edit-form .bft-input input {
+    /* Add your styles here */
+    border: 1px solid #ced4da; /* Example border */
+    border-radius: 0.25rem; /* Example border radius */
+}
+
+/* Labels */
+.bft-edit-form .bft-input label {
+    /* Add your styles here */
+    color: #495057; /* Example label color */
+}
+
+/* Save and Cancel buttons */
+.bft-edit-form [data-edit-from-save],
+.bft-edit-form [data-edit-from-cancel] {
+    /* Add your styles here */
+    background-color: #007bff; /* Example button color */
+    color: #fff; /* Example text color */
+    border: none; /* Example border removal */
+    padding: 0.375rem 0.75rem; /* Example padding */
+    margin-right: 0.5rem; /* Example margin */
+    border-radius: 0.25rem; /* Example border radius */
+}
