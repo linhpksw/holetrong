@@ -1,3 +1,30 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
 html,
 body {
     width: 100%;
@@ -5,7 +32,9 @@ body {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    font-family: Helvetica;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
 #tree {
@@ -35,14 +64,12 @@ svg.linh .node.green.female > rect {
 
 /* Custom field styles */
 .field_0 {
-    font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 16px;
     font-weight: 600;
     fill: #fff; /* Custom color for the first field */
 }
 
 .field_1 {
-    font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 16px;
     font-weight: 400;
     text-transform: uppercase;
@@ -84,7 +111,7 @@ g[data-ctrl-n-c-menu-name] > circle {
 .bft-edit-form .bft-edit-form-header {
     background: url('../imgs/pic1.jpg') center/cover no-repeat;
     height: 250px;
-    border-radius: 30px 30px 0px 0px;
+    border-radius: 0px;
 }
 
 .bft-edit-form .bft-edit-form-title {
@@ -98,9 +125,13 @@ g[data-ctrl-n-c-menu-name] > circle {
     z-index: 1000;
 }
 
-.bft-edit-form-instruments {
-    min-height: none;
+.bft-edit-form .bft-edit-form-instruments {
+    min-height: initial;
     margin-top: 120px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 /* Close button */
@@ -117,9 +148,6 @@ g[data-ctrl-n-c-menu-name] > circle {
 
 /* Buttons in the form */
 .bft-edit-form .bft-img-button {
-    /* Add your styles here */
-    background-color: #28a745; /* Example button color */
-    border-radius: 4px; /* Example border radius */
 }
 
 /* Input fields */

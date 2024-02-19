@@ -50,6 +50,8 @@ export function initializeFamilyTree(containerId) {
                 map: {
                     icon: mapIcon,
                     text: 'Map',
+                    hideIfEditMode: true,
+                    hideIfDetailsMode: false,
                 },
                 edit: {
                     icon: FamilyTree.icon.edit(24, 24, '#fff'),
@@ -61,7 +63,10 @@ export function initializeFamilyTree(containerId) {
                 pdf: {
                     icon: FamilyTree.icon.pdf(24, 24, '#fff'),
                     text: 'Save as PDF',
+                    hideIfEditMode: true,
+                    hideIfDetailsMode: false,
                 },
+                remove: null,
             },
             addMore: null,
             addMoreBtn: 'Add element',
