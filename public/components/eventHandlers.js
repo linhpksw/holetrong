@@ -69,6 +69,8 @@ export function attachEventHandlers(family) {
     });
 
     family.editUI.on('element-btn-click', function (sender, args) {
+        console.log(args);
+
         FamilyTree.fileUploadDialog(function (file) {
             let formData = new FormData();
             formData.append('file', file);
@@ -82,10 +84,24 @@ export function attachEventHandlers(family) {
             var data = family.get(args.nodeId);
             window.open(data.map);
         } else if (args.name == 'edit') {
-            console.log('edit button clicked');
-            
         }
     });
+
+    // // Use query selector to target the save and cancel buttons
+    // var cancelButton = document.querySelector('[data-edit-from-cancel]');
+    // var saveButton = document.querySelector('[data-edit-from-save]');
+
+    // // Listen for the cancel button click event
+    // cancelButton.addEventListener('click', function () {
+    //     var formFields = document.querySelector('.bft-edit-form-fields');
+    //     formFields.classList.remove('bft-edit-form-fields-active');
+    // });
+
+    // // Listen for the save button click event
+    // saveButton.addEventListener('click', function () {
+    //     var formFields = document.querySelector('.bft-edit-form-fields');
+    //     formFields.classList.remove('bft-edit-form-fields-active');
+    // });
 
     console.log('family: ', family);
 
