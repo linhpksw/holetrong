@@ -63,7 +63,7 @@ FamilyTree.elements.myTextArea = function (data, editElement, minWidth, readOnly
             style="
                 width: 100%;
                 min-height: 200px;
-                margin: 0 0 0 10px;
+                margin: 0 0 5px 5px;
                 padding: 5px;
                 box-sizing: border-box;
                 resize: none;
@@ -93,7 +93,7 @@ export function initializeFamilyTree(containerId) {
         scaleInitial: FamilyTree.match.boundary,
         nodeBinding: {
             field_0: 'name',
-            img_0: 'ImgUrl',
+            img_0: 'imgUrl',
             // field_1: 'born',
         },
         toolbar: {
@@ -105,7 +105,7 @@ export function initializeFamilyTree(containerId) {
         orderBy: 'orderId',
         editForm: {
             titleBinding: 'name',
-            photoBinding: 'ImgUrl',
+            photoBinding: 'imgUrl',
             generateElementsFromFields: false,
             elements: [
                 [
@@ -147,7 +147,7 @@ export function initializeFamilyTree(containerId) {
                     binding: 'moreInfo',
                 },
 
-                { type: 'textbox', label: 'Đường dẫn ảnh', binding: 'ImgUrl', btn: 'Tải lên' },
+                { type: 'textbox', label: 'Đường dẫn ảnh', binding: 'imgUrl', btn: 'Tải lên' },
             ],
             buttons: {
                 map: {

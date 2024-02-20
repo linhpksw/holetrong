@@ -6,6 +6,7 @@
 
 * {
     margin: 0;
+    font-family: 'Be Vietnam Pro', sans-serif !important;
 }
 
 input,
@@ -35,7 +36,7 @@ body {
     font-family: 'Be Vietnam Pro', sans-serif !important;
     line-height: 1.5 !important;
     -webkit-font-smoothing: antialiased !important;
-    font-size: 18px !important;
+    /* font-size: 20px !important; */
 }
 
 #tree {
@@ -153,30 +154,18 @@ g[data-ctrl-n-c-menu-name] > circle {
     display: inline;
 }
 
+.bft-edit-form-fields {
+    overflow-y: scroll !important;
+    font-size: 16px !important;
+}
+
+.bft-edit-form-fields::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
 /* Input fields */
 /* Labels */
 .bft-edit-form .bft-input label {
     color: #039be5;
     font-weight: 600;
 }
-
-/* Save and Cancel buttons */
-/* .bft-edit-form [data-edit-from-save] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.375rem 0.75rem;
-    margin-right: 0.5rem;
-    border-radius: 0.25rem;
-    font-weight: 600;
-} */
-
-/* .bft-edit-form [data-edit-from-save],
-.bft-edit-form [data-edit-from-cancel] {
-    background-color: #007bff;
-    color: #fff;
-    border: none; 
-    padding: 0.375rem 0.75rem; 
-    margin-right: 0.5rem; 
-    border-radius: 0.25rem; 
-} */

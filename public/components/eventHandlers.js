@@ -25,7 +25,7 @@ export function attachEventHandlers(family) {
     });
 
     family.onUpdateNode(async (args) => {
-        console.log('onUpdateNode', args);
+        // console.log('onUpdateNode', args);
 
         // Handle additions
         if (args.addNodesData && args.addNodesData.length > 0) {
@@ -69,13 +69,30 @@ export function attachEventHandlers(family) {
     });
 
     family.editUI.on('element-btn-click', function (sender, args) {
-        console.log(args);
-
-        FamilyTree.fileUploadDialog(function (file) {
+        FamilyTree.fileUploadDialog(async function (file) {
             let formData = new FormData();
             formData.append('file', file);
-            alert('upload the file');
-            console.log(args);
+            formData.append('nodeId', args.nodeId); // Include the nodeId in the request
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData, // Send the file and nodeId to the server
+                });
+                const data = await response.json();
+
+                if (data.status === 'Avatar uploaded and node updated!') {
+                    alert('Avatar uploaded successfully!');
+                    // initialize();
+                    // You might want to update the UI with the new avatar URL
+                } else {
+                    alert('Avatar upload failed.');
+                }
+                console.log(data);
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                alert('Error uploading avatar.');
+            }
         });
     });
 
@@ -86,24 +103,4 @@ export function attachEventHandlers(family) {
         } else if (args.name == 'edit') {
         }
     });
-
-    // // Use query selector to target the save and cancel buttons
-    // var cancelButton = document.querySelector('[data-edit-from-cancel]');
-    // var saveButton = document.querySelector('[data-edit-from-save]');
-
-    // // Listen for the cancel button click event
-    // cancelButton.addEventListener('click', function () {
-    //     var formFields = document.querySelector('.bft-edit-form-fields');
-    //     formFields.classList.remove('bft-edit-form-fields-active');
-    // });
-
-    // // Listen for the save button click event
-    // saveButton.addEventListener('click', function () {
-    //     var formFields = document.querySelector('.bft-edit-form-fields');
-    //     formFields.classList.remove('bft-edit-form-fields-active');
-    // });
-
-    console.log('family: ', family);
-
-    // Add other event handlers as needed...
 }
