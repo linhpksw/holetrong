@@ -81,6 +81,9 @@ export function attachEventHandlers(family) {
         if (args.name == 'map') {
             var data = family.get(args.nodeId);
             window.open(data.map);
+        } else if (args.name == 'edit') {
+            console.log('edit button clicked');
+            
         }
     });
 

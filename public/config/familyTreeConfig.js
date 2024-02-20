@@ -20,7 +20,7 @@ export function initializeFamilyTree(containerId) {
         scaleInitial: FamilyTree.match.boundary,
         nodeBinding: {
             field_0: 'name',
-            img_0: 'photo',
+            img_0: 'ImgUrl',
             // field_1: 'born',
         },
         toolbar: {
@@ -32,19 +32,47 @@ export function initializeFamilyTree(containerId) {
         orderBy: 'orderId',
         editForm: {
             titleBinding: 'name',
-            photoBinding: 'photo',
+            photoBinding: 'ImgUrl',
             generateElementsFromFields: false,
             elements: [
-                { type: 'textbox', label: 'Full Name', binding: 'name' },
-                { type: 'textbox', label: 'Photo Url', binding: 'ImgUrl', btn: 'Upload' },
+                [
+                    { type: 'textbox', label: 'Họ và tên', binding: 'name' },
+                    { type: 'textbox', label: 'Tên khác', binding: 'otherName' },
+                ],
+                {
+                    type: 'select',
+                    label: 'Giới tính',
+                    binding: 'gender',
+                    options: [
+                        { value: 'male', text: 'Nam' },
+                        { value: 'female', text: 'Nữ' },
+                    ],
+                },
 
                 [
-                    { type: 'date', label: 'Birth Date', binding: 'birthDate' },
-                    { type: 'date', label: 'Death Date', binding: 'deathDate' },
+                    { type: 'date', label: 'Ngày sinh (Dương lịch)', binding: 'solarBirthDate' },
+                    { type: 'date', label: 'Ngày sinh (Âm lịch)', binding: 'lunarBirthDate' },
                 ],
-                { type: 'textbox', label: 'Gender', binding: 'gender' },
 
-                // Add other fields as necessary
+                { type: 'textbox', label: 'Nơi sinh', binding: 'birthPlace' },
+                { type: 'textbox', label: 'Quê quán', binding: 'homeTown' },
+
+                [
+                    { type: 'date', label: 'Ngày mất (Dương lịch)', binding: 'solarDeathDate' },
+                    { type: 'date', label: 'Ngày mất (Âm lịch)', binding: 'lunarDeathDate' },
+                ],
+                { type: 'textbox', label: 'Nơi an táng', binding: 'deathPlace' },
+
+                { type: 'textbox', label: 'Chỗ ở hiện tại', binding: 'currentResidence' },
+                { type: 'textbox', label: 'Điện thoại', binding: 'phone' },
+                { type: 'textbox', label: 'Email', binding: 'email' },
+                { type: 'textbox', label: 'Link Facebook', binding: 'fbUrl' },
+
+                { type: 'textbox', label: 'Công danh (khoa bảng đỗ đạt và chức vụ đạt được)', binding: 'achivements' },
+
+                { type: 'textbox', label: 'Thông tin khác', binding: 'moreInfo' },
+
+                { type: 'textbox', label: 'Đường dẫn ảnh', binding: 'ImgUrl', btn: 'Tải lên' },
             ],
             buttons: {
                 map: {

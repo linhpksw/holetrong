@@ -90,7 +90,7 @@ g[data-ctrl-n-c-menu-name] > circle {
 }
 
 .bft-edit-form .bft-edit-form-avatar {
-    top: 175px;
+    top: 90px;
     border: none;
     background-color: transparent;
     width: 120px;
@@ -101,6 +101,7 @@ g[data-ctrl-n-c-menu-name] > circle {
     border: 8px solid #fff;
     transition-duration: 0.4s;
     transition-property: transform;
+    object-fit: cover; /* This prevents distortion */
 }
 
 #bft-avatar img:hover {
@@ -110,13 +111,13 @@ g[data-ctrl-n-c-menu-name] > circle {
 /* Header section */
 .bft-edit-form .bft-edit-form-header {
     background: url('../imgs/pic1.jpg') center/cover no-repeat;
-    height: 250px;
+    height: 150px;
     border-radius: 0px;
 }
 
 .bft-edit-form .bft-edit-form-title {
     position: absolute;
-    top: 305px;
+    top: 205px;
     left: 50%; /* Set the left edge of the title to the center of the parent */
     transform: translateX(-50%); /* Shift the title to the left by half its own width */
     width: max-content; /* This ensures that the width of the title is only as wide as its content */
@@ -127,28 +128,23 @@ g[data-ctrl-n-c-menu-name] > circle {
 
 .bft-edit-form .bft-edit-form-instruments {
     min-height: initial;
-    margin-top: 120px;
+    margin: -50px 10px 0 0;
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: end;
+
 }
 
-/* Close button */
-.bft-edit-form .bft-edit-form-close {
-    /* Add your styles here */
-    fill: red; /* Example icon color */
+.bft-edit-form .bft-edit-form-fields {
+    margin-top: 200px;
 }
+
 
 /* Avatar */
 .bft-edit-form .bft-edit-form-avatar {
-    /* Add your styles here */
     border-radius: 50%; /* Example avatar shape */
 }
 
-/* Buttons in the form */
-.bft-edit-form .bft-img-button {
-}
 
 /* Input fields */
 .bft-edit-form .bft-input input {
