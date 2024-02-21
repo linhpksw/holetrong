@@ -40,11 +40,11 @@ export function attachEventHandlers(family) {
 
                 const addResults = await Promise.all(addPromises);
 
-                // console.log('Add results:', addResults);
+                console.log('Add results:', addResults);
             } catch (error) {
                 console.error('Error adding nodes:', error);
             }
-            window.location.reload();
+            // window.location.reload();
         }
 
         // Handle updates
@@ -96,6 +96,11 @@ export function attachEventHandlers(family) {
                 break;
             case 'uploadImage':
                 FamilyTree.fileUploadDialog(async function (file) {
+                    if (!file.type.match('image.*')) {
+                        alert('Chỉ có thể tải lên tệp hình ảnh!');
+                        return; // Stop the function if the file is not an image
+                    }
+
                     let formData = new FormData();
                     formData.append('file', file);
                     formData.append('nodeId', args.nodeId); // Include the nodeId in the request
