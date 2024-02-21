@@ -182,6 +182,7 @@ export function initializeFamilyTree(containerId) {
                     hideIfEditMode: true,
                     hideIfDetailsMode: false,
                 },
+                remove: null,
                 removeCustom: {
                     icon: removeIcon,
                     text: 'Remove custom',
