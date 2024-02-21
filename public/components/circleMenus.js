@@ -71,11 +71,11 @@ export function circleMenuEvent(family) {
         const formatName = name ? name : 'người này';
 
         switch (args.menuItemName) {
-            case 'PDFProfile':
-                family.exportPDFProfile({
-                    id: args.nodeId,
-                });
-                break;
+            // case 'PDFProfile':
+            //     family.exportPDFProfile({
+            //         id: args.nodeId,
+            //     });
+            //     break;
             case 'editNode':
                 family.editUI.show(args.nodeId);
                 break;
