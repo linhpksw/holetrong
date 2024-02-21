@@ -44,7 +44,7 @@ export function attachEventHandlers(family) {
             } catch (error) {
                 console.error('Error adding nodes:', error);
             }
-            // window.location.reload();
+            window.location.reload();
         }
 
         // Handle updates
@@ -131,6 +131,7 @@ export function attachEventHandlers(family) {
 
             case 'removeCustom':
                 const isConfirmed = confirm(`Bạn có chắc muốn xoá ${formatName} không?
+
 Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ bị xoá theo.`);
 
                 if (isConfirmed) {

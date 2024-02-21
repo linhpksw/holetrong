@@ -81,6 +81,7 @@ export function circleMenuEvent(family) {
                 break;
             case 'removeCustomNode':
                 const isConfirmed = confirm(`Bạn có chắc muốn xoá ${formatName} không?
+
 Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ bị xoá theo.`);
 
                 if (isConfirmed) {
