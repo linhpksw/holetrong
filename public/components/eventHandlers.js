@@ -44,6 +44,7 @@ export function attachEventHandlers(family) {
             } catch (error) {
                 console.error('Error adding nodes:', error);
             }
+            window.location.reload();
         }
 
         // Handle updates

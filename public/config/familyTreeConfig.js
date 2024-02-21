@@ -176,12 +176,13 @@ export function initializeFamilyTree(containerId) {
                     hideIfDetailsMode: false,
                 },
                 share: null,
-                pdf: {
-                    icon: pdfIcon,
-                    text: 'Save as PDF',
-                    hideIfEditMode: true,
-                    hideIfDetailsMode: false,
-                },
+                // pdf: {
+                //     icon: pdfIcon,
+                //     text: 'Save as PDF',
+                //     hideIfEditMode: true,
+                //     hideIfDetailsMode: false,
+                // },
+                pdf: null,
                 remove: null,
                 removeCustom: {
                     icon: removeIcon,
