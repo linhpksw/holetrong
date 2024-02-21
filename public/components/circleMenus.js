@@ -19,11 +19,11 @@ const callIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://ww
 `;
 
 export const nodeCircleMenu = {
-    PDFProfile: {
-        icon: FamilyTree.icon.pdf(20, 20, 'white'),
-        text: 'PDF Profile',
-        color: MENU_ITEM_COLOR,
-    },
+    // PDFProfile: {
+    //     icon: FamilyTree.icon.pdf(20, 20, 'white'),
+    //     text: 'PDF Profile',
+    //     color: MENU_ITEM_COLOR,
+    // },
     editNode: {
         icon: editIcon,
         text: 'Edit node',
