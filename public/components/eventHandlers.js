@@ -108,17 +108,17 @@ export function attachEventHandlers(family) {
                         const data = await response.json();
 
                         if (data.status === 'Avatar uploaded and node updated!') {
-                            alert('Avatar uploaded successfully!');
+                            alert('Ảnh đại diện được tải lên thành công!');
 
                             // Reload the page to show the new avatar
                             window.location.reload();
                         } else {
-                            alert('Avatar upload failed.');
+                            alert('Ảnh đại diện tải lên thất bại!');
                         }
                         console.log(data);
                     } catch (error) {
                         console.error('Error uploading avatar:', error);
-                        alert('Error uploading avatar.');
+                        alert('Lỗi tải ảnh đại diện!');
                     }
                 });
 

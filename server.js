@@ -136,7 +136,7 @@ connectToMongoDB()
 
             try {
                 // Process and save the new image
-                await sharp(tempPath).resize(256, 256).toFormat('jpeg').jpeg({ quality: 90 }).toFile(newPath);
+                await sharp(tempPath).rotate().resize(256, 256).toFormat('jpeg').jpeg({ quality: 95 }).toFile(newPath);
 
                 // Update the node's avatar URL in the database
                 const newImageUrl = `/uploads/${newFilename}`;
