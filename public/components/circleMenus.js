@@ -111,7 +111,7 @@ Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ b�
     });
 
     family.nodeCircleMenuUI.on('mouseenter', function (sender, args) {
-        if (args.menuItem.text == 'Remove node') {
+        if (args.menuItem.text == 'Remove custom node') {
             let node = document.querySelector('[data-n-id="' + args.from + '"]');
             node.style.opacity = 0.5;
         }
