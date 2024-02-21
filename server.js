@@ -48,6 +48,8 @@ connectToMongoDB()
                 // Set the orderId for the new node
                 node.orderId = highestOrderId + 1;
 
+                node.imgUrl = node.gender === 'male' ? '/uploads/male.png' : '/uploads/female.png'; // Default avatar URL
+
                 // Insert the new node with the incremented orderId
                 const result = await familiesCollection.insertOne(node);
                 res.send({ status: 'Added', result });
@@ -79,6 +81,38 @@ connectToMongoDB()
 
             try {
                 await deleteNodeAndDescendants(familiesCollection, id);
+
+                // Check if the collection is empty after deletion
+                const count = await familiesCollection.countDocuments();
+                if (count === 0) {
+                    // Collection is empty, so create a base node
+                    const baseNode = {
+                        gender: 'male',
+                        id: '_abc1',
+                        orderId: 1,
+                        name: 'Lê Trọng Linh',
+                        pids: [],
+                        birthDate: '',
+                        deathDate: '',
+                        otherName: '',
+                        achivements: '',
+                        birthPlace: 'Phúc Sơn, Anh Sơn, Nghệ An.',
+                        currentResidence: 'P416B, C16, Thanh Xuân Bắc, Thanh Xuân, Hà Nội.',
+                        deathPlace: '',
+                        email: 'linhpksw@gmail.com',
+                        fbUrl: 'fb.me/linhpksw',
+                        homeTown: 'Phúc Sơn, Anh Sơn, Nghệ An.',
+                        lunarBirthDate: '',
+                        lunarDeathDate: '',
+                        moreInfo: '',
+                        phone: '0375830815',
+                        solarBirthDate: '',
+                        solarDeathDate: '',
+                        imgUrl: '/uploads/male.png',
+                    };
+                    await familiesCollection.insertOne(baseNode);
+                }
+
                 res.send({ status: 'Deleted', id });
             } catch (error) {
                 console.error('Error deleting node:', error);
@@ -95,45 +129,24 @@ connectToMongoDB()
                 return res.status(400).send('No file uploaded.');
             }
 
-            // Extract the nodeId from the request body
             const nodeId = req.body.nodeId;
-
-            // Use sharp to process the image
-            const processedImage = await sharp(req.file.path)
-                .resize(256, 256) // Resize the image to 256x256 pixels
-                .toBuffer(); // Convert to buffer for further processing or storage
-
-            // Generate a new filename for the processed image
+            const tempPath = req.file.path;
             const newFilename = `ava_${nodeId}.jpeg`;
             const newPath = path.join('uploads', newFilename);
 
-            // Save the processed image to the new path
-            await sharp(processedImage).toFile(newPath);
-
-            // Construct the new image URL
-            const newImageUrl = `/uploads/${newFilename}`;
-
-            // Update the node's avatar URL in the database
             try {
-                const updateResult = await familiesCollection.updateOne(
-                    { id: nodeId },
-                    { $set: { imgUrl: newImageUrl } }
-                );
+                // Process and save the new image
+                await sharp(tempPath).resize(256, 256).toFormat('jpeg').jpeg({ quality: 90 }).toFile(newPath);
 
-                // Check if the node was updated successfully
-                if (updateResult.modifiedCount === 0) {
-                    throw new Error('Node not found or avatar URL not updated.');
-                }
+                // Update the node's avatar URL in the database
+                const newImageUrl = `/uploads/${newFilename}`;
+
+                await familiesCollection.updateOne({ id: nodeId }, { $set: { imgUrl: newImageUrl } });
 
                 res.send({ status: 'Avatar uploaded and node updated!', avatarUrl: newImageUrl });
             } catch (error) {
-                console.error('Error updating node with new avatar:', error);
-                res.status(500).send({ status: 'Error', message: 'Failed to update node with new avatar.' });
-            } finally {
-                // Delete the temporary file created by multer
-                fs.unlink(req.file.path, (err) => {
-                    if (err) console.error('Error deleting temporary file:', err);
-                });
+                console.error('Error during image upload and update:', error);
+                res.status(500).send({ status: 'Error', message: 'Failed to upload and update avatar.' });
             }
         });
 
@@ -141,8 +154,6 @@ connectToMongoDB()
         app.get('/uploads/:filename', (req, res) => {
             const filename = req.params.filename;
             const filepath = path.resolve('uploads', filename);
-
-            // Optional: Add authentication check here
 
             res.sendFile(filepath, (err) => {
                 if (err) {

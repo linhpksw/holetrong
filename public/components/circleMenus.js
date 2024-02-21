@@ -29,9 +29,9 @@ export const nodeCircleMenu = {
         text: 'Edit node',
         color: MENU_ITEM_COLOR,
     },
-    removeNode: {
+    removeCustomNode: {
         icon: removeIcon,
-        text: 'Remove node',
+        text: 'Remove custom node',
         color: MENU_ITEM_COLOR,
     },
     callNode: {
@@ -65,7 +65,10 @@ export function circleMenuBtn(FamilyTree) {
 export function circleMenuEvent(family) {
     // Event Handlers
     family.nodeCircleMenuUI.on('click', function (sender, args) {
-        let node = family.getNode(args.nodeId);
+        const data = family.get(args.nodeId);
+        const { name, phone } = data;
+
+        const formatName = name ? name : 'người này';
 
         switch (args.menuItemName) {
             case 'PDFProfile':
@@ -76,21 +79,32 @@ export function circleMenuEvent(family) {
             case 'editNode':
                 family.editUI.show(args.nodeId);
                 break;
-            case 'removeNode':
-                fetch(`/nodes/delete/${args.nodeId}`, {
-                    method: 'DELETE',
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log('Node removed:', data);
-                        family.removeNode(args.nodeId);
+            case 'removeCustomNode':
+                const isConfirmed = confirm(`Bạn có chắc muốn xoá ${formatName} không?
+Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ bị xoá theo.`);
+
+                if (isConfirmed) {
+                    fetch(`/nodes/delete/${args.nodeId}`, {
+                        method: 'DELETE',
                     })
-                    .catch((error) => {
-                        console.error('Error removing node:', error);
-                    });
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // console.log('Node removed:', data);
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            console.error('Error removing node:', error);
+                        });
+                } else {
+                    // console.log('Node deletion canceled by the user.');
+                }
                 break;
             case 'callNode':
-                alert('Calling ' + args.nodeId);
+                if (phone) {
+                    window.open(`tel:${phone}`);
+                } else {
+                    alert('Không có số điện thoại cho ' + formatName + '.');
+                }
                 break;
             default:
         }

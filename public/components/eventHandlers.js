@@ -25,8 +25,6 @@ export function attachEventHandlers(family) {
     });
 
     family.onUpdateNode(async (args) => {
-        // console.log('onUpdateNode', args);
-
         // Handle additions
         if (args.addNodesData && args.addNodesData.length > 0) {
             try {
@@ -41,7 +39,8 @@ export function attachEventHandlers(family) {
                 );
 
                 const addResults = await Promise.all(addPromises);
-                console.log('Add results:', addResults);
+
+                // console.log('Add results:', addResults);
             } catch (error) {
                 console.error('Error adding nodes:', error);
             }
@@ -61,7 +60,8 @@ export function attachEventHandlers(family) {
                 );
 
                 const updateResults = await Promise.all(updatePromises);
-                console.log('Update results:', updateResults);
+
+                // console.log('Update results:', updateResults);
             } catch (error) {
                 console.error('Error updating nodes:', error);
             }
@@ -69,38 +69,90 @@ export function attachEventHandlers(family) {
     });
 
     family.editUI.on('element-btn-click', function (sender, args) {
-        FamilyTree.fileUploadDialog(async function (file) {
-            let formData = new FormData();
-            formData.append('file', file);
-            formData.append('nodeId', args.nodeId); // Include the nodeId in the request
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData, // Send the file and nodeId to the server
-                });
-                const data = await response.json();
-
-                if (data.status === 'Avatar uploaded and node updated!') {
-                    alert('Avatar uploaded successfully!');
-                    // initialize();
-                    // You might want to update the UI with the new avatar URL
-                } else {
-                    alert('Avatar upload failed.');
-                }
-                console.log(data);
-            } catch (error) {
-                console.error('Error uploading avatar:', error);
-                alert('Error uploading avatar.');
-            }
-        });
+        //    Upload trong form
     });
 
     family.editUI.on('button-click', function (sender, args) {
-        if (args.name == 'map') {
-            var data = family.get(args.nodeId);
-            window.open(data.map);
-        } else if (args.name == 'edit') {
+        const btnName = args.name;
+        const data = family.get(args.nodeId);
+
+        const { name, phone } = data;
+        const formatName = name ? name : 'người này';
+
+        switch (btnName) {
+            case 'map':
+                if (data && data.currentResidence) {
+                    // URL encode the address
+                    const encodedAddress = encodeURIComponent(data.currentResidence);
+                    // Construct the Google Maps search URL
+                    const googleMapsSearchUrl = `https://www.google.com/maps/search/${encodedAddress}`;
+                    // Open the URL in a new tab/window
+                    window.open(googleMapsSearchUrl);
+                } else {
+                    console.error('No current residence data found for nodeId:', args.nodeId);
+                }
+
+                break;
+            case 'uploadImage':
+                FamilyTree.fileUploadDialog(async function (file) {
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('nodeId', args.nodeId); // Include the nodeId in the request
+
+                    try {
+                        const response = await fetch('/upload', {
+                            method: 'POST',
+                            body: formData, // Send the file and nodeId to the server
+                        });
+                        const data = await response.json();
+
+                        if (data.status === 'Avatar uploaded and node updated!') {
+                            alert('Avatar uploaded successfully!');
+
+                            // Reload the page to show the new avatar
+                            window.location.reload();
+                        } else {
+                            alert('Avatar upload failed.');
+                        }
+                        console.log(data);
+                    } catch (error) {
+                        console.error('Error uploading avatar:', error);
+                        alert('Error uploading avatar.');
+                    }
+                });
+
+                break;
+
+            case 'removeCustom':
+                const isConfirmed = confirm(`Bạn có chắc muốn xoá ${formatName} không?
+Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ bị xoá theo.`);
+
+                if (isConfirmed) {
+                    fetch(`/nodes/delete/${args.nodeId}`, {
+                        method: 'DELETE',
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // console.log('Node removed:', data);
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            console.error('Error removing node:', error);
+                        });
+                } else {
+                    console.log('Node deletion canceled by the user.');
+                }
+                break;
+
+            case 'call':
+                if (phone) {
+                    window.open(`tel:${phone}`);
+                } else {
+                    alert('Không có số điện thoại cho ' + formatName);
+                }
+                break;
+            default:
+                break;
         }
     });
 }

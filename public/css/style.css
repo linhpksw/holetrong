@@ -36,7 +36,6 @@ body {
     font-family: 'Be Vietnam Pro', sans-serif !important;
     line-height: 1.5 !important;
     -webkit-font-smoothing: antialiased !important;
-    /* font-size: 20px !important; */
 }
 
 #tree {
@@ -115,7 +114,7 @@ g[data-ctrl-n-c-menu-name] > circle {
 
 /* Header section */
 .bft-edit-form .bft-edit-form-header {
-    background: url('../imgs/pic1.jpg') center/cover no-repeat;
+    background: url('../imgs/cover.webp') center/cover no-repeat;
     height: 100px;
     border-radius: 0px;
 }
