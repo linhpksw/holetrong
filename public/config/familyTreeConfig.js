@@ -91,7 +91,6 @@ FamilyTree.elements.myTextArea = function (data, editElement, minWidth, readOnly
     };
 };
 
-
 export function initializeFamilyTree(containerId) {
     configureTemplates(FamilyTree);
 
@@ -105,7 +104,7 @@ export function initializeFamilyTree(containerId) {
         template: 'linh',
         nodeTreeMenu: true,
         enableSearch: true,
-        lazyLoading: true,
+        // lazyLoading: true,
         scaleInitial: FamilyTree.match.boundary,
         nodeBinding: {
             field_0: 'name',
@@ -114,7 +113,7 @@ export function initializeFamilyTree(containerId) {
         toolbar: {
             zoom: true,
             fit: true,
-            fullScreen: true
+            fullScreen: true,
         },
         nodeCircleMenu: nodeCircleMenu,
         // undoRedoStorageName: 'myStorageName',
