@@ -12,7 +12,7 @@ export function attachEventHandlers(family) {
                 args.p.ya +
                 '"/>';
         }
-        if (args.cnode.isPartner && args.node.partnerSeparation == 30) {
+        if (args.cnode.isPartner && args.node.partnerSeparation == 50) {
             args.html +=
                 '<use data-ctrl-ec-id="' +
                 args.node.id +

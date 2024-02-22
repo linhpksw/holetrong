@@ -91,23 +91,30 @@ FamilyTree.elements.myTextArea = function (data, editElement, minWidth, readOnly
     };
 };
 
+
 export function initializeFamilyTree(containerId) {
     configureTemplates(FamilyTree);
 
     let family = new FamilyTree(document.getElementById(containerId), {
         mouseScrool: FamilyTree.action.ctrlZoom,
         // enableTouch: true,
+        // partnerSeparation: 100,
+        levelSeparation: 100,
+        siblingSeparation: 150,
+        subtreeSeparation: 300,
         template: 'linh',
         nodeTreeMenu: true,
         enableSearch: true,
+        lazyLoading: true,
         scaleInitial: FamilyTree.match.boundary,
         nodeBinding: {
             field_0: 'name',
             img_0: 'imgUrl',
         },
         toolbar: {
-            fullScreen: true,
             zoom: true,
+            fit: true,
+            fullScreen: true
         },
         nodeCircleMenu: nodeCircleMenu,
         // undoRedoStorageName: 'myStorageName',
