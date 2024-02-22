@@ -105,7 +105,8 @@ export function initializeFamilyTree(containerId) {
         nodeTreeMenu: true,
         enableSearch: true,
         // lazyLoading: true,
-        scaleInitial: FamilyTree.match.boundary,
+        scaleInitial: 1,
+        // orientation: FamilyTree.orientation.bottom,
         nodeBinding: {
             field_0: 'name',
             img_0: 'imgUrl',
