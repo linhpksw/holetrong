@@ -76,20 +76,17 @@ export function attachEventHandlers(family) {
         const btnName = args.name;
         const data = family.get(args.nodeId);
 
-        const { name, phone } = data;
+        const { name, phone, currentResidence } = data;
         const formatName = name ? name : 'người này';
 
         switch (btnName) {
             case 'map':
-                if (data && data.currentResidence) {
-                    // URL encode the address
-                    const encodedAddress = encodeURIComponent(data.currentResidence);
-                    // Construct the Google Maps search URL
+                if (currentResidence && currentResidence.trim() !== '') {
+                    const encodedAddress = encodeURIComponent(currentResidence.trim());
                     const googleMapsSearchUrl = `https://www.google.com/maps/search/${encodedAddress}`;
-                    // Open the URL in a new tab/window
                     window.open(googleMapsSearchUrl);
                 } else {
-                    console.error('No current residence data found for nodeId:', args.nodeId);
+                    alert('Không có địa chỉ nhà hiện tại cho ' + formatName + '!');
                 }
 
                 break;
@@ -154,7 +151,7 @@ Chú ý: toàn bộ vợ/chồng và con cái của người này cũng sẽ b�
                 if (phone) {
                     window.open(`tel:${phone}`);
                 } else {
-                    alert('Không có số điện thoại cho ' + formatName);
+                    alert('Không có số điện thoại cho ' + formatName + '!');
                 }
                 break;
             default:
